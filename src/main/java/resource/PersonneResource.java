@@ -14,12 +14,7 @@ import javax.ws.rs.core.Response;
 
 import business.PersonneBusiness;
 import entity.Personne;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 
 @Path("personnes")
 public class PersonneResource {
@@ -28,10 +23,6 @@ public class PersonneResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Get all Personnes", description = "Get all Personnes", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Personne.class)))),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response getAll() {
 		return Response.ok(personneBusiness.getAll()).build();
 	}
@@ -39,11 +30,6 @@ public class PersonneResource {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Get an Personne", description = "Get an Personne by its id", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Personne.class))),
-			@ApiResponse(responseCode = "404", description = "Personne not found"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response get(@PathParam("id") long id) {
 		return Response.ok(personneBusiness.get(id)).build();
 	}
@@ -51,11 +37,6 @@ public class PersonneResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Add an Personne", description = "Add an Personne", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes"),
-			@ApiResponse(responseCode = "400", description = "Bad Request"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response add(Personne p) {
 		personneBusiness.add(p);
 		return Response.noContent().build();
@@ -65,21 +46,12 @@ public class PersonneResource {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Update an Personne", description = "Update an Personne by its id", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Personne.class))),
-			@ApiResponse(responseCode = "400", description = "Bad Request"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response update(@PathParam("id") long id, Personne p) {
 		return Response.ok(personneBusiness.update(p)).build();
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Delete an Personne", description = "Delete an Personne by its id", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response delete(Personne p) {
 		personneBusiness.delete(p);
 		return Response.noContent().build();
@@ -89,10 +61,6 @@ public class PersonneResource {
 	@Path("_search")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Search an Personne", description = "Search an Personne by its name or nickname", responses = {
-			@ApiResponse(responseCode = "200", description = "Succes", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Personne.class))),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@SecurityRequirement(name = "bearer-auth")
 	public Response search(@QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
 		return Response.ok(personneBusiness.search(nom, prenom)).build();
 	}
