@@ -7,7 +7,6 @@ import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-import business.JWTHelper;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import io.swagger.v3.oas.integration.OpenApiConfigurationException;
@@ -26,10 +25,7 @@ public class RestAPI extends ResourceConfig {
 	public RestAPI() {
 		packages("resource");
 
-
 		log.debug("Lancement du ressource config de l'application.");
-		log.debug("Création de l'instance JWTTokenHelper.");
-		JWTHelper.getInstance();
 
 		log.debug("Création de l'OpenAPI (Swagger).");
 		OpenAPI openApi = new OpenAPI();
