@@ -1,37 +1,29 @@
 package resource;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import business.PersonneBusiness;
-import entity.Personne;
-import entity.Publisher;
+import business.PublisherBusiness;
 
-@Path("broker")
-public class PersonneResource {
+@Path("publisher")
+public class PublisherResource {
 
-	PersonneBusiness personneBusiness = new PersonneBusiness();
+	PublisherBusiness publisherBusiness = new PublisherBusiness();
 
 	
-	@GET
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response add(String[] tabPusblisher, String TOKEN) {
-		List<Publisher> mesPublishers = personneBusiness.subscribe(tabPusblisher, TOKEN);
-		return Response.ok(personneBusiness.getAllDataPersonne(mesPublishers)).build();
+	public Response add(String id, String data) {
+		publisherBusiness.publish(id, data);
+		return Response.noContent().build();
 	}
-	
 /*	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,15 +1,14 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class Personne {
 
-	private long id;
-	private String prenom;
-	private String nom;
-	private Date naissance;
+	private String token;
+	private List<Publisher> mesPublishers;
 
 }

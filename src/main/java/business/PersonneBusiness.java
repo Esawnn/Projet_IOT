@@ -5,58 +5,66 @@ import java.util.Date;
 import java.util.List;
 
 import entity.Personne;
+import entity.Publisher;
 
 public class PersonneBusiness {
 
 	private List<Personne> personnes = new ArrayList<>();
+	private List<Publisher> publishers = new ArrayList<>();
 
 	public PersonneBusiness() {
-		Personne p = new Personne();
-		p.setId(0);
-		p.setPrenom("Etienne");
-		p.setNom("BEGON");
-		p.setNaissance(new Date());
-		personnes.add(p);
-		p = new Personne();
-		p.setId(0);
-		p.setPrenom("Ernesto");
-		p.setNom("EXPOSITO");
-		p.setNaissance(new Date());
-		personnes.add(p);
+		
 	}
 
 	public List<Personne> getAll() {
 		return personnes;
 	}
-
-	public Personne get(long id) {
-		return personnes.stream().filter(p -> p.getId() == id).findAny().orElse(null);
-	}
-
-	public void add(Personne personne) {
-		personnes.add(personne);
-	}
-
-	public Personne update(Personne personne) {
-		Personne oldPersonne = personnes.stream().filter(p -> p.getId() == personne.getId()).findAny().orElse(null);
-		if (oldPersonne != null) {
-			personnes.remove((int) personne.getId());
-			personnes.add(personne);
-			return personne;
+	
+	public String getAllDataPersonne(List<Publisher> mesPublishers) {
+		String data = "";
+		
+		for(int i = 0;i<mesPublishers.size();i++ ) {
+			data += mesPublishers.get(i).getData();
 		}
-		return null;
+		return data;
 	}
 
-	public void delete(Personne personne) {
-		personnes.remove((int) personne.getId());
+
+	public List<Publisher> subscribe(String[] tabPublisher, String TOKEN) {
+		Personne personne = searchPersonne(TOKEN);
+		List<Publisher> mesPublishers = new ArrayList();
+		if(personne != null) {
+			for(int i =0;i<tabPublisher.length;i++) {
+				Publisher publisher = searchPublisher(tabPublisher[i]);
+				if(publisher != null) {
+					mesPublishers.add(publisher);
+				}
+			}
+			personne.setMesPublishers(mesPublishers);
+		}
+		return mesPublishers;
 	}
 
-	public Personne search(String nom, String prenom) {
-		if (nom != null && prenom != null) {
-			return personnes.stream().filter(p -> nom.contains(p.getNom()) && prenom.contains(p.getPrenom())).findAny()
+
+	public Personne searchPersonne(String TOKEN) {
+		if (TOKEN != null) {
+			return personnes.stream().filter(p -> TOKEN.contains(p.getToken())).findAny()
 					.orElse(null);
 		}
 		return null;
 	}
+	
+	public Publisher searchPublisher(String id) {
+		if (id != null) {
+			return publishers.stream().filter(p -> id.contains(p.getId())).findAny()
+					.orElse(null);
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
 
 }

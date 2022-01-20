@@ -15,6 +15,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import entity.Credentials;
+import entity.Personne;
 
 public class JWTHelper {
 
@@ -33,14 +34,27 @@ public class JWTHelper {
 	}
 
 	public static String generateToken(Credentials credentials) {
-		return JWT.create().withSubject("MY APP")
+		
+		String TOKEN = JWT.create().withSubject("MY APP")
 				.withAudience("MY COMPANY")
 				.withIssuer("https://mondomaine.com")
 				.withIssuedAt(new Date(System.currentTimeMillis()))
 				.withClaim("login", credentials.getLogin())
 				.withExpiresAt(getExpirationDate())
 				.sign(algorithm);
+		
+		
+		savePersonne(TOKEN);
+		
+		return TOKEN;
 	}
+	
+	public static Personne savePersonne (String Token ) {
+		Personne personne = new Personne();
+		personne.setToken(Token);
+		
+		return personne;
+	} 
 
 	private static Date getExpirationDate() {
 		long currentTimeInMillis = System.currentTimeMillis();
