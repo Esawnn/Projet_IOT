@@ -11,12 +11,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import business.PersonneBusiness;
 import entity.Personne;
 import entity.Publisher;
+import entity.TabPublisher;
 
 @Path("broker")
 public class PersonneResource {
@@ -24,13 +27,24 @@ public class PersonneResource {
 	PersonneBusiness personneBusiness = new PersonneBusiness();
 
 	
-	@GET
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response add(String[] tabPusblisher, String TOKEN) {
-		List<Publisher> mesPublishers = personneBusiness.subscribe(tabPusblisher, TOKEN);
+	public Response add(@Context HttpHeaders headers,TabPublisher tabPublisher) {
+		String authHeaders = headers.getHeaderString(HttpHeaders.AUTHORIZATION);
+		String TOKEN;
+	
+			if (authHeaders != null && authHeaders.toUpperCase().startsWith("BEARER ")) {
+				TOKEN = authHeaders.substring("BEARER ".length());
+			} else {
+				TOKEN = "";
+			}
+		
+		List<Publisher> mesPublishers = personneBusiness.subscribe(tabPublisher.getPublishers(), TOKEN);
 		return Response.ok(personneBusiness.getAllDataPersonne(mesPublishers)).build();
 	}
+	
+	
 	
 /*	
 	@GET

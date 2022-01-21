@@ -24,7 +24,7 @@ public class PersonneBusiness {
 		String data = "";
 		
 		for(int i = 0;i<mesPublishers.size();i++ ) {
-			data += mesPublishers.get(i).getData();
+			data += "{" +mesPublishers.get(i).getData()+"|";
 		}
 		return data;
 	}

@@ -43,7 +43,6 @@ public class JWTHelper {
 				.withExpiresAt(getExpirationDate())
 				.sign(algorithm);
 		
-		
 		savePersonne(TOKEN);
 		
 		return TOKEN;

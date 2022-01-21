@@ -17,7 +17,7 @@ public class AuthentiticationResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response auth(Credentials credentials) {
+		System.out.println("test");
 		return Response.ok(JWTHelper.generateToken(credentials)).build();
 	}
-
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import business.PublisherBusiness;
+import entity.Publisher;
 
 @Path("publisher")
 public class PublisherResource {
@@ -20,8 +21,8 @@ public class PublisherResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response add(String id, String data) {
-		publisherBusiness.publish(id, data);
+	public Response add(Publisher publisher) {
+		publisherBusiness.publish(publisher.getId(),publisher.getData());
 		return Response.noContent().build();
 	}
 /*	

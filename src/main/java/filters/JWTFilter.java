@@ -26,6 +26,8 @@ public class JWTFilter implements Filter {
 	private static final String AUTH_HEADER_VALUE_PREFIX = "BEARER "; // with trailing space to separate token
 
 	private static final String AUTHORIZATION_SERVICE_STANDARD = "/api/auth";
+	private static final String BROKER_SERVICE = "/api/broker";
+	private static final String PUBLISHER_SERVICE = "/api/publisher";
 
 	private static final String OPEN_API_SERVICE = "/api/openapi.json";
 	private static final String SWAGGER_UI = "/swagger-ui/";
@@ -55,8 +57,9 @@ public class JWTFilter implements Filter {
 		String uri = httpRequest.getRequestURI();
 		String privateKeyHeaderValue = getBearerToken(httpRequest.getHeader(AUTH_HEADER_KEY));
 		log.debug("HEADER = " + privateKeyHeaderValue);
+		System.out.println(uri);
 		if (!uri.contains(AUTHORIZATION_SERVICE_STANDARD)
-				&& !uri.contains(OPEN_API_SERVICE) && !uri.contains(SWAGGER_UI)) {
+				&& !uri.contains(OPEN_API_SERVICE) && !uri.contains(SWAGGER_UI) && !uri.contains(BROKER_SERVICE) && !uri.contains(PUBLISHER_SERVICE)) {
 			if (privateKeyHeaderValue == null || privateKeyHeaderValue.isEmpty()) {
 				log.warn("Token manquant dans le header HTTP.");
 				httpResponse.setContentType("application/json");
@@ -77,7 +80,7 @@ public class JWTFilter implements Filter {
 				httpResponse.getWriter().flush();
 				return;
 			}
-		}
+		} 
 
 		filterChain.doFilter(httpRequest, httpResponse);
 		return;
