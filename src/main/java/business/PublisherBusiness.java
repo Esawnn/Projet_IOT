@@ -10,7 +10,8 @@ public class PublisherBusiness {
 
 	private List<Personne> personnes = new ArrayList<>();
 	private List<Publisher> publishers = new ArrayList<>();
-
+	private String data;
+	
 	public PublisherBusiness() {
 		
 	}
@@ -18,6 +19,15 @@ public class PublisherBusiness {
 	public List<Publisher> getAll() {
 		return publishers;
 	}
+	
+	public void setData(String data) {
+		this.data = data;
+	}
+	
+	public String getData() {
+		return data;
+	}
+
 
 
 	public void publish(String id, String data) {
@@ -29,7 +39,9 @@ public class PublisherBusiness {
 			new_publisher.setId(id);
 			new_publisher.setData(data);
 		}
-	}
+	} 
+	
+	
 
 
 	public Personne searchPersonne(String TOKEN) {

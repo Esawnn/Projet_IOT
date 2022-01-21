@@ -12,21 +12,24 @@ public class PersonneBusiness {
 	private List<Personne> personnes = new ArrayList<>();
 	private List<Publisher> publishers = new ArrayList<>();
 
+
 	public PersonneBusiness() {
 		
 	}
-
+	
+	
 	public List<Personne> getAll() {
 		return personnes;
 	}
 	
 	public String getAllDataPersonne(List<Publisher> mesPublishers) {
+		
 		String data = "";
 		
 		for(int i = 0;i<mesPublishers.size();i++ ) {
 			data += "{" +mesPublishers.get(i).getData()+"|";
 		}
-		return data;
+		return data; 
 	}
 
 

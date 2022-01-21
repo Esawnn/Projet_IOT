@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import business.PersonneBusiness;
+import business.PublisherBusiness;
 import entity.Personne;
 import entity.Publisher;
 import entity.TabPublisher;
@@ -25,6 +26,7 @@ import entity.TabPublisher;
 public class PersonneResource {
 
 	PersonneBusiness personneBusiness = new PersonneBusiness();
+	PublisherBusiness publisherBusiness = new PublisherBusiness();
 
 	
 	@POST
@@ -41,7 +43,9 @@ public class PersonneResource {
 			}
 		
 		List<Publisher> mesPublishers = personneBusiness.subscribe(tabPublisher.getPublishers(), TOKEN);
-		return Response.ok(personneBusiness.getAllDataPersonne(mesPublishers)).build();
+		//return Response.ok(personneBusiness.getAllDataPersonne(mesPublishers)).build();
+		System.out.println(publisherBusiness.getData());
+		return Response.ok("\"id\":3, \"date\":\"12/10/2011\", \"temp\":25, \"humidite\":12, \"lum\":12\n|\"id\":2, \"date\":\"12/09/2021\", \"temp\":23, \"humidite\":10, \"lum\":10\n").build();
 	}
 	
 	
